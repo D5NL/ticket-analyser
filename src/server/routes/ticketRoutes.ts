@@ -93,7 +93,7 @@ router.post('/upload', upload.single('file'), async (req, res) => {
             const newDate = new Date(ticket.laatsteUpdate || new Date());
             
             if (newDate > existingDate) {
-              await Ticket.findOneAndUpdate(
+              await (Ticket.findOneAndUpdate as any)(
                 searchQuery,
                 ticket,
                 { new: true }
@@ -101,7 +101,7 @@ router.post('/upload', upload.single('file'), async (req, res) => {
               stats.updated++;
             }
           } else {
-            await Ticket.create(ticket);
+            await (Ticket.create as any)(ticket);
             stats.new++;
           }
         } catch (ticketError) {
@@ -114,7 +114,7 @@ router.post('/upload', upload.single('file'), async (req, res) => {
       if (uploadedTicketIds.length > 0) {
         try {
           // Vind alle tickets met M-nummers die niet in de uploadlijst zitten
-          const ticketsToComplete = await Ticket.find({
+          const ticketsToComplete = await (Ticket.find as any)({
             meldingsnummer: { 
               $regex: /^M-/,  // Alleen tickets die beginnen met M-
               $nin: uploadedTicketIds  // Niet in de geüploade lijst
@@ -137,7 +137,7 @@ router.post('/upload', upload.single('file'), async (req, res) => {
             };
             
             // Werk het ticket bij
-            await Ticket.findByIdAndUpdate(ticket._id, {
+            await (Ticket.findByIdAndUpdate as any)(ticket._id, {
               status: 'Afgerond',
               afgerondeOp: now,
               $push: { historie: newHistoryItem }
@@ -160,14 +160,14 @@ router.post('/upload', upload.single('file'), async (req, res) => {
       console.error('Fout bij het parsen van Excel bestand:', parseError);
       res.status(500).json({ 
         error: 'Fout bij het parsen van Excel bestand', 
-        details: parseError.message 
+        details: (parseError as Error).message 
       });
     }
   } catch (error) {
     console.error('Upload error:', error);
     res.status(500).json({ 
       error: 'Fout bij verwerken bestand',
-      details: error.message
+      details: (error as Error).message
     });
   }
 });
