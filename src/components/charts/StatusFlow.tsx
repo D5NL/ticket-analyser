@@ -1,5 +1,5 @@
 import React from 'react';
-import { ITicket } from '../../database/models/Ticket';
+import { ITicket } from '../../database/models/Ticket.js';
 
 interface Props {
   tickets: ITicket[];
@@ -23,7 +23,7 @@ export const StatusFlow: React.FC<Props> = ({ tickets }) => {
 
   // Sorteer op aantal transities
   const sortedTransitions = Object.entries(statusTransitions)
-    .sort(([,a], [,b]) => b - a)
+    .sort(([, a], [, b]) => (b as number) - (a as number))
     .slice(0, 10);
 
   return (
@@ -42,7 +42,7 @@ export const StatusFlow: React.FC<Props> = ({ tickets }) => {
               </div>
             </div>
             <div className="ml-4">
-              <span className="text-sm font-medium text-gray-900">{count}x</span>
+              <span className="text-sm font-medium text-gray-900">{count as React.ReactNode}x</span>
             </div>
           </div>
         ))}

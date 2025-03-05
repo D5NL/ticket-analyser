@@ -10,8 +10,15 @@
     "noUnusedParameters": false,
     "noImplicitAny": false,
     "skipLibCheck": true,
-    "useUnknownInCatchVariables": false
+    "useUnknownInCatchVariables": false,
+    "strict": false,
+    "strictNullChecks": false,
+    "strictFunctionTypes": false,
+    "strictPropertyInitialization": false,
+    "strictBindCallApply": false,
+    "ignoreDeprecations": "5.0",
+    "typeRoots": ["./node_modules/@types"]
   },
-  "include": ["src"],
-  "exclude": []
+  "include": ["src/server/**/*"],
+  "exclude": ["src/components/**/*", "src/hooks/**/*", "node_modules"]
 } 

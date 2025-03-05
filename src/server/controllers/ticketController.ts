@@ -132,7 +132,7 @@ export const createTicket = async (req: Request, res: Response) => {
     });
 
     // Verwerk tickets één voor één om historie correct bij te houden
-    const updatedTickets = [];
+    const updatedTickets: any[] = [];
     for (const ticket of formattedTickets) {
       try {
         console.log('Verwerken ticket:', ticket);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
-import { ITicket } from '../../database/models/Ticket';
+import { ITicket } from '../../database/models/Ticket.js';
 
 interface Props {
   tickets: ITicket[];
@@ -22,7 +22,7 @@ export const TimeToResolve: React.FC<Props> = ({ tickets }) => {
   const sortedProblems = Object.entries(problemStats)
     .map(([problem, stats]) => ({
       problem,
-      average: Math.round(stats.total / stats.count)
+      average: Math.round((stats as { total: number; count: number }).total / (stats as { total: number; count: number }).count)
     }))
     .sort((a, b) => b.average - a.average)
     .slice(0, 10);

@@ -1,3 +1,5 @@
+import mongoose, { Schema } from 'mongoose';
+
 interface StatusHistory {
   status: string;
   timestamp: Date;
