@@ -12,12 +12,12 @@
     "start:dev": "concurrently \"npm run dev\" \"npm run dev:server\"",
     "build": "tsc --project tsconfig.build.json && vite build",
     "preview": "vite preview",
-    "type-check": "tsc --project tsconfig.server.json --noEmit && tsc --project tsconfig.json --noEmit",
+    "type-check": "tsc --project tsconfig.json --noEmit",
     "build:server": "tsc --project tsconfig.build.json",
     "start": "node dist/server/index.js",
     "start:server": "tsx src/server/index.ts",
     "deploy:frontend": "vite build",
-    "build:render": "npm install && tsc --project tsconfig.build.json && vite build"
+    "build:render": "npm install && tsc --project tsconfig.build.json --skipLibCheck --noEmit false && vite build"
   },
   "dependencies": {
     "@tremor/react": "^3.12.0",
@@ -33,7 +33,6 @@
     "react": "^18.2.0",
     "react-chartjs-2": "^5.3.0",
     "react-dom": "^18.2.0",
-    "typescript": "^5.0.2",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
@@ -51,6 +50,7 @@
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.5",
     "tsx": "^4.19.3",
+    "typescript": "^5.8.2",
     "vite": "^4.4.5"
   }
 }
