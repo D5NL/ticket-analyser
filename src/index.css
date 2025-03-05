@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Dark mode variabelen */
+:root {
+  --color-background: #ffffff;
+  --color-surface: #f9fafb;
+  --color-text: #111827;
+  --color-border: #e5e7eb;
+}
+
+.dark {
+  --color-background: #121212;
+  --color-surface: #1e1e1e;
+  --color-text: #e0e0e0;
+  --color-border: #333333;
+}
+
+/* Maak dark mode stijlen beschikbaar voor elementen die niet met Tailwind zijn gemaakt */
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Zorg dat alle hoofdcontainers de achtergrondkleur overnemen */
+#root, 
+main,
+.app-container {
+  background-color: var(--color-background);
+  min-height: 100vh;
+}
+
+/* Aanpassing voor charts in dark mode */
+.dark .recharts-cartesian-grid line,
+.dark .recharts-cartesian-axis-line,
+.dark .recharts-cartesian-axis-tick-line {
+  stroke: #333333;
+}
+
+.dark .recharts-text {
+  fill: #e0e0e0;
+}
+
+.dark .recharts-tooltip {
+  background-color: #1e1e1e !important;
+  border-color: #333333 !important;
+  color: #e0e0e0 !important;
+}
+
+/* Algemene kaart-achtergronden */
+.dark .bg-white {
+  background-color: var(--color-surface) !important;
+}
+
+.dark .bg-gray-50,
+.dark .bg-gray-100 {
+  background-color: var(--color-surface) !important;
+}
+
+.dark .border-gray-200 {
+  border-color: var(--color-border);
+}
+
+.dark .text-gray-500 {
+  color: #9ca3af;
+}
+
+.dark .text-gray-600 {
+  color: #d1d5db;
+}
+
+.dark .text-gray-700 {
+  color: #e5e7eb;
+}
+
+.dark .text-gray-900 {
+  color: #f9fafb;
+}
+
+/* Zorg dat modals en dialogen ook dark mode krijgen */
+.dark .modal-content,
+.dark .dialog {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border-color: var(--color-border);
+} 
