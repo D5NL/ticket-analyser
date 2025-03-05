@@ -5,7 +5,11 @@
     "moduleResolution": "NodeNext",
     "outDir": "dist",
     "noEmit": false,
-    "allowImportingTsExtensions": false
+    "allowImportingTsExtensions": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "strict": true,
+    "skipLibCheck": true
   },
   "include": ["src/server/**/*"],
   "exclude": []
