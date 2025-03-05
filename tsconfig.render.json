@@ -1,0 +1,31 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "outDir": "dist",
+    "noEmit": false,
+    "allowImportingTsExtensions": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitAny": false,
+    "skipLibCheck": true,
+    "useUnknownInCatchVariables": false,
+    "strict": false,
+    "strictNullChecks": false,
+    "strictFunctionTypes": false,
+    "strictPropertyInitialization": false,
+    "strictBindCallApply": false,
+    "ignoreDeprecations": "5.0",
+    "suppressImplicitAnyIndexErrors": true,
+    "noImplicitThis": false,
+    "noFallthroughCasesInSwitch": false,
+    "noErrorTruncation": true,
+    "suppressExcessPropertyErrors": true,
+    "checkJs": false,
+    "allowJs": true,
+    "noResolve": false
+  },
+  "include": ["src/server/**/*"],
+  "exclude": ["src/components/**/*", "src/hooks/**/*", "node_modules", "src/vite-env.d.ts"]
+} 

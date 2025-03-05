@@ -17,7 +17,7 @@
     "start": "node dist/server/index.js",
     "start:server": "tsx src/server/index.ts",
     "deploy:frontend": "vite build",
-    "build:render": "npm install && echo \"Skipping TypeScript type checking...\" && mkdir -p dist && cp -r src/server dist/ && vite build"
+    "build:render": "npm install && tsc --project tsconfig.render.json --skipLibCheck && mkdir -p dist && cp -r src/server dist/ && vite build"
   },
   "dependencies": {
     "@tremor/react": "^3.12.0",
