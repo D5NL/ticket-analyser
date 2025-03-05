@@ -10,14 +10,14 @@
     "dev": "vite",
     "dev:server": "nodemon --exec tsx src/server/index.ts",
     "start:dev": "concurrently \"npm run dev\" \"npm run dev:server\"",
-    "build": "tsc --project tsconfig.server.json && vite build",
+    "build": "tsc --project tsconfig.build.json && vite build",
     "preview": "vite preview",
     "type-check": "tsc --project tsconfig.server.json --noEmit && tsc --project tsconfig.json --noEmit",
-    "build:server": "tsc --project tsconfig.server.json",
+    "build:server": "tsc --project tsconfig.build.json",
     "start": "node dist/server/index.js",
     "start:server": "tsx src/server/index.ts",
     "deploy:frontend": "vite build",
-    "build:render": "npm install && tsc --project tsconfig.server.json && vite build"
+    "build:render": "npm install && tsc --project tsconfig.build.json && vite build"
   },
   "dependencies": {
     "@tremor/react": "^3.12.0",

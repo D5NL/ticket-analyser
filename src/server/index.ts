@@ -2,8 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import ticketRoutes from './routes/ticketRoutes';
-import { config } from './config';
+import ticketRoutes from './routes/ticketRoutes.js';
+import { config } from './config.js';
 
 dotenv.config();
 

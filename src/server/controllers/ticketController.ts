@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Ticket, ITicket, TicketStatus } from '../../database/models/Ticket';
+import { Ticket, ITicket, TicketStatus } from '../../database/models/Ticket.js';
 import mongoose from 'mongoose';
 
 // Mock data voor gebruik wanneer de database offline is

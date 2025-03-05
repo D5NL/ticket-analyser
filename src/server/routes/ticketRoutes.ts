@@ -7,9 +7,9 @@ import {
   deleteTicket,
   getTicketStats,
   resetAllTickets
-} from '../controllers/ticketController';
-import { Ticket, ITicket } from '../models/Ticket';
-import { parseExcel } from '../utils/excelParser';
+} from '../controllers/ticketController.js';
+import { Ticket, ITicket } from '../models/Ticket.js';
+import { parseExcel } from '../utils/excelParser.js';
 import mongoose from 'mongoose';
 
 const router = express.Router();

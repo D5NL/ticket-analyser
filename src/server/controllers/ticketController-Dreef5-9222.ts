@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Ticket, ITicket } from '../../database/models/Ticket';
+import { Ticket, ITicket } from '../../database/models/Ticket.js';
 
 export const getAllTickets = async (req: Request, res: Response) => {
   try {
