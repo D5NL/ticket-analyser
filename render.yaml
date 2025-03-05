@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: service-ticket-analyzer
+    env: node
+    buildCommand: npm run build:render
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: FRONTEND_URL
+        value: https://d5app.vercel.app
+      - key: MONGODB_URI
+        fromDatabase:
+          name: mongodb
+          property: connectionString 

@@ -48,3 +48,45 @@ Een applicatie voor het beheren en analyseren van servicetickets.
 - Filtermogelijkheden op status, datum, behandelaar, etc.
 - Automatische markering van afgeronde tickets
 - Responsive design 
+
+## Deployment Instructies
+
+### Backend Deployment op Render
+
+1. Ga naar [render.com](https://render.com) en meld je aan
+2. Klik op "New" en kies "Web Service"
+3. Verbind met je GitHub repository
+4. Configureer met de volgende instellingen:
+   - **Naam**: service-ticket-analyzer
+   - **Environment**: Node
+   - **Build Command**: `npm run build:render`
+   - **Start Command**: `npm run start`
+   - **Plan**: Free
+
+5. Voeg de volgende Environment Variables toe:
+   - `NODE_ENV`: production
+   - `PORT`: 10000
+   - `FRONTEND_URL`: URL van je Vercel frontend (toe te voegen na frontend deployment)
+   - `MONGODB_URI`: Je MongoDB-verbindingsstring
+
+### Frontend Deployment op Vercel
+
+1. Ga naar [vercel.com](https://vercel.com) en meld je aan
+2. Importeer je repository
+3. Configureer met de volgende instellingen:
+   - **Framework Preset**: Vite
+   - **Build Command**: `npm run deploy:frontend`
+   - **Output Directory**: dist
+
+4. Voeg deze Environment Variables toe:
+   - `VITE_API_URL`: URL van je Render backend service
+   - `NODE_ENV`: production
+
+5. Na deployment, kopieer de Vercel URL en voeg deze toe aan je Render service als `FRONTEND_URL` environment variable
+
+### Probleemoplossing
+
+Als je problemen ondervindt bij de deployment, controleer de volgende punten:
+- Controleer of alle environment variables correct zijn ingesteld
+- Bekijk de logboeken in Render en Vercel voor specifieke foutmeldingen
+- Zorg dat MongoDB Atlas correct is ingesteld en je IP-adres is toegestaan 

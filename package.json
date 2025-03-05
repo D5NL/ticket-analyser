@@ -13,7 +13,8 @@
     "build:server": "tsc --project tsconfig.server.json",
     "start": "node dist/server/index.js",
     "start:server": "tsx src/server/index.ts",
-    "deploy:frontend": "vite build"
+    "deploy:frontend": "vite build",
+    "build:render": "npm run build:server && npm run deploy:frontend"
   },
   "dependencies": {
     "@tremor/react": "^3.12.0",
