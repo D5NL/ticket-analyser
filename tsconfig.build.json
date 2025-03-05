@@ -16,9 +16,8 @@
     "strictFunctionTypes": false,
     "strictPropertyInitialization": false,
     "strictBindCallApply": false,
-    "ignoreDeprecations": "5.0",
-    "typeRoots": ["./node_modules/@types"]
+    "ignoreDeprecations": "5.0"
   },
   "include": ["src/server/**/*"],
-  "exclude": ["src/components/**/*", "src/hooks/**/*", "node_modules"]
+  "exclude": ["src/components/**/*", "src/hooks/**/*", "node_modules", "src/vite-env.d.ts"]
 } 
