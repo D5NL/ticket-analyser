@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ITicket } from '../database/models/Ticket';
+import { ITicket } from '../database/models/Ticket.js';
 
 interface UploadModalProps {
   isOpen: boolean;
