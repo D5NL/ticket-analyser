@@ -1,25 +1,28 @@
 import React, { useState, useMemo } from 'react';
-import { FileUpload } from './components/FileUpload';
-import { useTicketAnalyzer } from './hooks/useTicketAnalyzer';
-import { FilterBar } from './components/FilterBar';
+import { FileUpload } from './components/FileUpload.js';
+import { useTicketAnalyzer } from './hooks/useTicketAnalyzer.js';
+import { FilterBar } from './components/FilterBar.js';
 import { format, subMonths } from 'date-fns';
-import { DashboardStats } from './components/DashboardStats';
-import { ITicket, TicketStatus } from './database/models/Ticket';
-import { StatusDistribution } from './components/charts/StatusDistribution';
-import { RecentlyCompleted } from './components/tables/RecentlyCompleted';
-import { TicketsPerMonth } from './components/charts/TicketsPerMonth';
-import { HandlerPerformance } from './components/charts/HandlerPerformance';
-import { ProblemDistribution } from './components/charts/ProblemDistribution';
-import { StatusFlow } from './components/charts/StatusFlow';
-import { TimeToResolve } from './components/charts/TimeToResolve';
-import { LongOpenTickets } from './components/tables/LongOpenTickets';
+import { DashboardStats } from './components/DashboardStats.js';
+import { ITicket, TicketStatus } from './database/models/Ticket.js';
+import { StatusDistribution } from './components/charts/StatusDistribution.js';
+import { RecentlyCompleted } from './components/tables/RecentlyCompleted.js';
+import { TicketsPerMonth } from './components/charts/TicketsPerMonth.js';
+import { HandlerPerformance } from './components/charts/HandlerPerformance.js';
+import { ProblemDistribution } from './components/charts/ProblemDistribution.js';
+import { StatusFlow } from './components/charts/StatusFlow.js';
+import { TimeToResolve } from './components/charts/TimeToResolve.js';
+import { LongOpenTickets } from './components/tables/LongOpenTickets.js';
 import './utils/chartConfig';  // Voeg deze import toe bovenaan
-import { KPISection } from './components/KPISection';
-import { LoadingSpinner } from './components/LoadingSpinner';
-import { ErrorMessage } from './components/ErrorMessage';
-import { UploadModal } from './components/UploadModal';
-import { DarkModeToggle } from './components/DarkModeToggle';
-import { useDarkMode } from './hooks/useDarkMode';
+import { KPISection } from './components/KPISection.js';
+import { LoadingSpinner } from './components/LoadingSpinner.js';
+import { ErrorMessage } from './components/ErrorMessage.js';
+import { UploadModal } from './components/UploadModal.js';
+import { DarkModeToggle } from './components/DarkModeToggle.js';
+import { useDarkMode } from './hooks/useDarkMode.js';
+
+// API basis URL - dynamisch voor productie
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:4444';
 
 export const App: React.FC = () => {
   // Gebruik de dark mode hook
@@ -38,12 +41,13 @@ export const App: React.FC = () => {
   const [activeFilters, setActiveFilters] = useState<null | typeof initialFilters>(null);
   const [filters, setFilters] = useState(initialFilters);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const { 
     tickets, 
     stats, 
     loading, 
-    error, 
     uploadTickets, 
     refreshData 
   } = useTicketAnalyzer();
@@ -60,11 +64,7 @@ export const App: React.FC = () => {
 
   // Gefilterde tickets alleen als er actieve filters zijn
   const filteredTickets = useMemo(() => {
-    console.log('Raw tickets:', tickets);
-    console.log('Active filters:', activeFilters);
-
     if (!tickets || !activeFilters) {
-      console.log('Returning unfiltered tickets:', tickets || []);
       return tickets || [];
     }
 
@@ -96,7 +96,6 @@ export const App: React.FC = () => {
       return true;
     });
 
-    console.log('Filtered tickets:', filtered);
     return filtered;
   }, [tickets, activeFilters]);
 
@@ -106,16 +105,19 @@ export const App: React.FC = () => {
   };
 
   const handleReset = async () => {
-    if (window.confirm('Weet je zeker dat je alle tickets wilt verwijderen?')) {
-      try {
-        const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:4444';
-        await fetch(`${API_BASE_URL}/api/tickets/reset`, {
-          method: 'POST',
-        });
-        refreshData();
-      } catch (error) {
-        console.error('Fout bij reset:', error);
-      }
+    try {
+      setIsLoading(true);
+      await fetch(`${API_BASE_URL}/api/tickets/reset`, {
+        method: 'POST',
+      });
+      refreshData();
+      // Voeg feedback toe
+      alert('Alle tickets zijn succesvol gereset');
+    } catch (error) {
+      console.error('Fout bij reset:', error);
+      setError('Er is een probleem opgetreden bij het resetten van tickets');
+    } finally {
+      setIsLoading(false);
     }
   };
 

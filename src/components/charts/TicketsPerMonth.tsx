@@ -1,6 +1,6 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
-import { ITicket } from '../../database/models/Ticket';
+import { ITicket } from '../../database/models/Ticket.js';
 import { format, subMonths, eachMonthOfInterval } from 'date-fns';
 import { nl } from 'date-fns/locale';
 

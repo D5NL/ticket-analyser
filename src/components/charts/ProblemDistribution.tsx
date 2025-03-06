@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Pie } from 'react-chartjs-2';
-import { ITicket } from '../../database/models/Ticket';
+import { ITicket } from '../../database/models/Ticket.js';
 import { Chart as ChartJS } from 'chart.js';
 
 interface Props {

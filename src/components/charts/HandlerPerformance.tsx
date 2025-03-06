@@ -1,6 +1,6 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
-import { ITicket } from '../../database/models/Ticket';
+import { ITicket } from '../../database/models/Ticket.js';
 
 interface Props {
   tickets: ITicket[];

@@ -1,10 +1,10 @@
 import React from 'react';
-import { ITicket } from '../../database/models/Ticket';
+import { ITicket } from '../../database/models/Ticket.js';
 import { format } from 'date-fns';
 import { nl } from 'date-fns/locale';
 
 interface Props {
-  tickets: ITicket[];
+  tickets: Omit<ITicket, keyof Document>[];
   threshold?: number; // Aantal dagen waarna een ticket als 'lang open' wordt beschouwd
 }
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Bar } from 'react-chartjs-2';
-import { ITicket } from '../../database/models/Ticket';
-import { Modal } from '../Modal';
+import { ITicket } from '../../database/models/Ticket.js';
+import { Modal } from '../Modal.js';
 
 interface Props {
   tickets: ITicket[];

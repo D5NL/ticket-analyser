@@ -11,25 +11,15 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const allowedOrigins = [
-  'http://localhost:5175',  // development
-  'http://localhost:5176',  // alternatieve development poort
-  process.env.FRONTEND_URL || 'https://d5app.vercel.app', // production frontend URL
-  process.env.CLIENT_URL || 'https://jouw-domain.vercel.app' // production
-];
+  process.env.NODE_ENV === 'development' ? 'http://localhost:5175' : null,  // development
+  process.env.NODE_ENV === 'development' ? 'http://localhost:5176' : null,  // alternatieve development poort
+  process.env.FRONTEND_URL || 'https://ticket-analyser.vercel.app', // production frontend URL
+  process.env.CLIENT_URL || 'https://ticket-analyser.vercel.app' // production
+].filter(Boolean); // Filter null/undefined waarden
 
 // Middleware
 app.use(cors({
-  origin: (origin, callback) => {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    
-    if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV === 'development') {
-      callback(null, true);
-    } else {
-      console.warn(`Origin ${origin} niet toegestaan door CORS`);
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: process.env.FRONTEND_URL || 'https://ticket-analyser.vercel.app',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -41,8 +31,28 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // Start de server direct, ongeacht databaseverbinding
 const server = app.listen(PORT, () => {
-  console.log(`Server draait op http://localhost:${PORT}`);
+  console.log(`Server draait op poort ${PORT}`);
 });
+
+// Consistente MongoDB connectie methode
+const connectDB = async () => {
+  try {
+    if (!process.env.MONGODB_URI) {
+      console.warn('MONGODB_URI niet ingesteld, database wordt niet verbonden');
+      return;
+    }
+    
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log('MongoDB verbonden');
+  } catch (error) {
+    console.error('MongoDB connectie fout:', error);
+    // Blijf proberen elke 5 seconden
+    setTimeout(connectDB, 5000);
+  }
+};
+
+// Start connectie proces
+connectDB();
 
 // Routes
 app.use('/api/tickets', ticketRoutes);
@@ -93,7 +103,7 @@ app.get('/api/diagnostics/db', async (req, res) => {
         diagnostics.hostInfo = serverInfo as any;
         // @ts-ignore
         diagnostics.pingResult = result;
-      } catch (cmdError) {
+      } catch (cmdError: any) {
         // @ts-ignore
         diagnostics.commandError = {
           message: cmdError.message,
@@ -103,7 +113,7 @@ app.get('/api/diagnostics/db', async (req, res) => {
     }
 
     res.json(diagnostics);
-  } catch (error) {
+  } catch (error: any) {
     res.status(500).json({
       error: 'Diagnostische fout',
       details: error.message
@@ -111,18 +121,14 @@ app.get('/api/diagnostics/db', async (req, res) => {
   }
 });
 
-// Verbinding maken met MongoDB Atlas...
-console.log('Verbinding maken met MongoDB Atlas...');
+// Mongoose connection events
+mongoose.connection.on('error', (err) => {
+  console.error('MongoDB connection error:', err);
+});
 
-// Configuratie voor mongoose
-mongoose.set('strictQuery', false);
-
-// Verbinding maken met MongoDB
-mongoose.connect(process.env.MONGODB_URI!)
-  .then(() => {
-    console.log('Verbonden met MongoDB Atlas');
-    // Server is al gestart, geen tweede start nodig
-  })
-  .catch((error) => {
-    console.error('MongoDB verbindingsfout:', error);
-  }); 
+mongoose.connection.on('disconnected', () => {
+  console.log('MongoDB disconnected, trying to reconnect...');
+  setTimeout(() => {
+    mongoose.connect(process.env.MONGODB_URI);
+  }, 5000);
+}); 

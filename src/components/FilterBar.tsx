@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { format, subMonths } from 'date-fns';
 import { nl } from 'date-fns/locale';
-import { TicketStatus } from '../database/models/Ticket';
+import { TicketStatus } from '../database/models/Ticket.js';
 
 interface FilterBarProps {
   filters: {

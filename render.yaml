@@ -11,5 +11,5 @@ services:
         value: 10000
       - key: FRONTEND_URL
         value: https://ticket-analyser.vercel.app
-      - key: MONGODB_URI
-        value: mongodb+srv://tnederhof:s2bnXs87aQCHBpBa@database.dq8c2.mongodb.net/ticketdb?retryWrites=true&w=majority&authSource=admin 
+      # MongoDB URI moet via het Render dashboard worden ingesteld
+      # voor veiligheidsredenen 

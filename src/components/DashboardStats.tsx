@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { ITicket } from '../database/models/Ticket';
+import { ITicket } from '../database/models/Ticket.js';
 
 interface DashboardStatsProps {
   tickets: ITicket[];

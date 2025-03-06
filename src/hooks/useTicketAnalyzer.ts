@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ITicket } from '../database/models/Ticket';
+import { ITicket } from '../database/models/Ticket.js';
 
 interface TicketStats {
   totaal: number;
@@ -9,7 +9,6 @@ interface TicketStats {
 
 // API basis URL - dynamisch voor productie
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:4444';
-console.log('API URL:', API_BASE_URL);
 
 export const useTicketAnalyzer = () => {
   const [tickets, setTickets] = useState<ITicket[]>([]);
@@ -26,7 +25,6 @@ export const useTicketAnalyzer = () => {
       setTickets(data);
     } catch (err) {
       setError('Fout bij ophalen tickets');
-      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -39,7 +37,6 @@ export const useTicketAnalyzer = () => {
       const data = await response.json();
       setStats(data);
     } catch (err) {
-      console.error('Fout bij ophalen statistieken:', err);
     }
   };
 
@@ -104,14 +101,11 @@ export const useTicketAnalyzer = () => {
   const refreshData = async () => {
     try {
       setLoading(true);
-      console.log('Refreshing data...');
       const response = await fetch(`${API_BASE_URL}/api/tickets`);
       const data = await response.json();
-      console.log('Refreshed data:', data);
       setTickets(data);
       await fetchStats();
     } catch (error) {
-      console.error('Refresh error:', error);
       setError('Fout bij ophalen tickets');
     } finally {
       setLoading(false);

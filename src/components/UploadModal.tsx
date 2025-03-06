@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ITicket } from '../database/models/Ticket';
+import { ITicket } from '../database/models/Ticket.js';
 
 // API basis URL - dynamisch voor productie
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:4444';
